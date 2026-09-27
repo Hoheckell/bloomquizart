@@ -305,7 +305,38 @@ test.describe("Persistência e reset", () => {
     await expect(page.locator("#map .tile").nth(1)).toBeEnabled();
   });
 
-  test("reset volta ao welcome e limpa save", async ({ page }) => {
+  test("reset mostra trajetória antes e só limpa após confirmar", async ({ page }) => {
+    await seedAndLoad(page, {
+      name: "Luna",
+      completedLevels: [1, 2, 3, 4, 5, 6],
+      unlockedLevel: 6,
+      coins: 74,
+      xp: 106,
+      mosaicBits: 36,
+      medals: ["inicio", "mestre"]
+    });
+    await page.evaluate(() => {
+      document.getElementById("screen-end").classList.add("active");
+      document.getElementById("screen-map").classList.remove("active");
+    });
+    await page.locator("#btn-reset").click();
+    await expect(page.locator("#screen-summary")).toHaveClass(/active/);
+    await expect(page.locator("#summary-list")).toContainText("Luna");
+    await expect(page.locator("#summary-list")).toContainText("6 de 6");
+    await expect(page.locator("#summary-list")).toContainText("74");
+    await expect(page.locator("#summary-list")).toContainText("106");
+    await expect(page.locator("#summary-list")).toContainText("36 de 36");
+    await expect(page.locator("#summary-list")).toContainText("Mosaico completo");
+    const stillThere = await page.evaluate(() => localStorage.getItem("mosaico-sonoro-v1"));
+    expect(stillThere).not.toBeNull();
+    await page.locator("#btn-reset-confirm").click();
+    await expect(page.locator("#screen-welcome")).toHaveClass(/active/);
+    await expect(page.locator("#hud")).toBeHidden();
+    const raw = await page.evaluate(() => localStorage.getItem("mosaico-sonoro-v1"));
+    expect(raw).toBeNull();
+  });
+
+  test("cancelar o reset volta ao final sem apagar nada", async ({ page }) => {
     await seedAndLoad(page, {
       completedLevels: [1, 2, 3, 4, 5, 6],
       unlockedLevel: 6,
@@ -316,10 +347,11 @@ test.describe("Persistência e reset", () => {
       document.getElementById("screen-map").classList.remove("active");
     });
     await page.locator("#btn-reset").click();
-    await expect(page.locator("#screen-welcome")).toHaveClass(/active/);
-    await expect(page.locator("#hud")).toBeHidden();
+    await expect(page.locator("#screen-summary")).toHaveClass(/active/);
+    await page.locator("#btn-reset-cancel").click();
+    await expect(page.locator("#screen-end")).toHaveClass(/active/);
     const raw = await page.evaluate(() => localStorage.getItem("mosaico-sonoro-v1"));
-    expect(raw).toBeNull();
+    expect(raw).not.toBeNull();
   });
 });
 

@@ -291,6 +291,13 @@ p { margin: 0 0 12px; max-width: 62ch; }
   border-radius: 999px; padding: 4px 10px; font-size: 0.8rem; font-weight: 800;
 }
 
+.summary-list {
+  display: grid; grid-template-columns: minmax(140px, auto) 1fr; gap: 8px 16px;
+  margin: 12px 0 18px;
+}
+.summary-list dt { font-weight: 800; color: var(--color-muted-fg); }
+.summary-list dd { margin: 0; }
+
 .shop-grid, .medal-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;
 }

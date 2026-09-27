@@ -452,6 +452,36 @@ function renderEnd() {
   showScreen("end");
 }
 
+function renderSummary() {
+  const list = $("summary-list");
+  list.innerHTML = "";
+  const interestLabel = (INTERESTS.find((i) => i.id === state.interest) || {}).label || state.interest;
+  const medalNames = state.medals
+    .map((id) => (MEDALS.find((m) => m.id === id) || {}).name)
+    .filter(Boolean);
+  const rows = [
+    ["Nome", state.name + (state.title ? " · " + state.title : "")],
+    ["Hiperfoco", interestLabel],
+    ["Níveis concluídos", state.completedLevels.length + " de 6"],
+    ["Notas sonoras", String(state.coins)],
+    ["XP", String(state.xp)],
+    ["Pedras no mosaico", state.mosaicBits + " de 36"],
+    ["Dicas restantes", String(state.hints)],
+    ["Cristais de checkpoint", String(state.tokens)],
+    ["Medalhas", state.medals.length + " de " + MEDALS.length],
+    ["Selos conquistados", medalNames.length ? medalNames.join(", ") : "Nenhum ainda"]
+  ];
+  rows.forEach(([term, value]) => {
+    const dt = document.createElement("dt");
+    dt.textContent = term;
+    const dd = document.createElement("dd");
+    dd.textContent = value;
+    list.appendChild(dt);
+    list.appendChild(dd);
+  });
+  showScreen("summary");
+}
+
 function useHint() {
   const q = currentQuestion();
   if (!q) return;
@@ -511,7 +541,11 @@ function boot() {
     renderLore();
     showScreen("lore");
   });
-  $("btn-reset").addEventListener("click", () => {
+  $("btn-reset").addEventListener("click", renderSummary);
+  $("btn-reset-cancel").addEventListener("click", () => {
+    renderEnd();
+  });
+  $("btn-reset-confirm").addEventListener("click", () => {
     localStorage.removeItem(STORAGE_KEY);
     state = defaultState();
     questions = [];
