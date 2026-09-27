@@ -42,7 +42,7 @@ Husky runs commitlint on `commit-msg`. A commit that does not match the format i
 
 ## Pull request process
 
-1. Create a branch from `main` following the naming convention
+1. Create a branch from `develop` following the naming convention
 2. Make commits using Conventional Commits
 3. Add or update Playwright tests for behavior changes
 4. Update documentation when the player-facing flow changes
@@ -52,7 +52,11 @@ Husky runs commitlint on `commit-msg`. A commit that does not match the format i
 8. Squash and merge when approved
 9. Delete the branch after merge
 
-Keep history linear. Rebase onto `main` before merge. Do not push merge commits.
+Keep history linear. Rebase onto `develop` before merge. Do not push merge commits.
+
+## Deploy
+
+The site is static and published via GitHub Pages from the `develop` branch, root path: https://hoheckell.github.io/bloomquizart/. Every push to `develop` redeploys automatically.
 
 ## Code review checklist
 

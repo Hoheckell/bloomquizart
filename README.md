@@ -4,6 +4,8 @@ Portal gamificado de artes para o 7o ano. O aluno percorre 6 salas da taxonomia 
 
 Feito para um aluno com TDAH, TEA nivel 1 e altas habilidades. Frases curtas. Sem ironia. O hiperfoco entra nas perguntas dos niveis 4, 5 e 6.
 
+**Jogue agora:** https://hoheckell.github.io/bloomquizart/
+
 ## Como jogar
 
 1. Abra o portal no navegador (veja Como rodar).
@@ -14,6 +16,8 @@ Feito para um aluno com TDAH, TEA nivel 1 e altas habilidades. Frases curtas. Se
 6. Zere as 6 salas para juntar o mosaico.
 
 O progresso fica em `localStorage` na chave `mosaico-sonoro-v1`.
+
+Ao pedir um novo jogador, o jogo mostra antes um resumo da trajetoria (nome, hiperfoco, niveis, notas, XP, mosaico, dicas, cristais e medalhas). So depois de confirmar o save e apagado. Da para voltar atras sem perder nada.
 
 ## Pedagogia
 
@@ -70,7 +74,7 @@ npx playwright install chromium
 npm test
 ```
 
-A suíte cobre welcome, mapa, escolha multipla, resposta aberta, dica, safe-fail, checkpoint, HUD, loja e temas, medalhas, lore, pausa, persistencia, reset, hiperfoco e zerar o jogo.
+A suíte cobre welcome, mapa, escolha multipla, resposta aberta, dica, safe-fail, checkpoint, HUD, loja e temas, medalhas, lore, pausa, persistencia, reset com resumo e confirmacao, hiperfoco e zerar o jogo. 29 testes.
 
 ## Git
 
