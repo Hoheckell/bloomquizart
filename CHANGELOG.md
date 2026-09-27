@@ -7,7 +7,7 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/). 
 ### Adicionado
 
 - Tela de resumo da trajetória antes do reset: nome, título, hiperfoco, níveis, notas, XP, mosaico, dicas, cristais e medalhas. O save só é apagado após confirmação; dá para cancelar sem perder nada.
-- Publicação no GitHub Pages: https://hoheckell.github.io/bloomquizart/
+- Publicação no GitHub Pages: <https://hoheckell.github.io/bloomquizart/>
 
 ### Corrigido
 
