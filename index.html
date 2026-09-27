@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mosaico Sonoro — Portal Gamificado</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Pular para o conteúdo</a>
+  <div class="live" id="live" aria-live="polite"></div>
+
+  <div class="app">
+    <header class="hud" id="hud" hidden>
+      <div class="hud-brand">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity=".7"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+        <span>Mosaico Sonoro</span>
+      </div>
+      <div class="chip" id="chip-name" title="Jogador">Jogador</div>
+      <div class="chip" aria-label="Notas sonoras"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg><span id="coins">0</span></div>
+      <div class="chip" aria-label="XP"><span>XP</span><span id="xp">0</span></div>
+      <div class="hud-actions">
+        <button class="icon-btn" id="btn-pause" type="button" aria-label="Pausa e modo foco">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-map" type="button" aria-label="Mapa das salas">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2V6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 4v14M15 6v14" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-shop" type="button" aria-label="Loja">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16l-1.5 11h-13L4 7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7V5a4 4 0 018 0v2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-medals" type="button" aria-label="Medalhas">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="10" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 14l-2 8 6-3 6 3-2-8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-lore" type="button" aria-label="História do Atelier">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 00-3 3V4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 8h8M8 12h6" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="screen active" id="screen-welcome" aria-labelledby="w-title">
+        <article class="hero-card">
+          <p class="kicker">Portal gamificado</p>
+          <h1 id="w-title">Olá!</h1>
+          <p class="lead">Este é o Mosaico Sonoro. Um Atelier onde sons viram pedras. O mosaico quebrou. Você junta as peças.</p>
+          <p>São 6 níveis para zerar o jogo:</p>
+          <ol class="rules">
+            <li><span class="num">1</span> Lembrar — reconhecer fatos.</li>
+            <li><span class="num">2</span> Entender — explicar com suas palavras.</li>
+            <li><span class="num">3</span> Aplicar — usar a ideia.</li>
+            <li><span class="num">4</span> Analisar — separar partes.</li>
+            <li><span class="num">5</span> Avaliar — julgar com motivo.</li>
+            <li><span class="num">6</span> Criar — inventar algo novo.</li>
+          </ol>
+          <p>Regras curtas:</p>
+          <ul class="rules">
+            <li><span class="num">i</span> Uma pergunta por vez. Sem resposta pronta antes de você tentar.</li>
+            <li><span class="num">ii</span> Errar é seguro (safe-fail). Você tenta de novo. Nada some.</li>
+            <li><span class="num">iii</span> Checkpoints salvam o caminho. Há medalhas, notas e uma loja.</li>
+            <li><span class="num">iv</span> Frases curtas. Um passo. Sem ironia.</li>
+          </ul>
+          <form id="form-welcome">
+            <div class="field">
+              <label for="player-name">Qual é o seu nome?</label>
+              <input id="player-name" name="name" maxlength="24" autocomplete="nickname" required>
+            </div>
+            <div class="field">
+              <label for="player-interest">Qual é o assunto favorito no mundo? Seu hiperfoco.</label>
+              <p class="helper">Vamos usar isso nas perguntas difíceis (níveis 4, 5 e 6).</p>
+              <select id="player-interest" required>
+                <option value="" disabled selected>Escolha um</option>
+              </select>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary" type="submit">Entrar no Atelier</button>
+            </div>
+          </form>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-map" aria-labelledby="map-title">
+        <article class="panel">
+          <p class="kicker">Mapa</p>
+          <h2 id="map-title">Seis salas. Um selo por vez.</h2>
+          <p>Só a sala atual abre. Termine para avançar. Checkpoints brilham no mosaico.</p>
+          <div class="xp-bar" aria-label="Progresso geral">
+            <span class="muted">Trilha</span>
+            <div class="progress-track"><div class="progress-fill" id="global-progress"></div></div>
+            <span id="global-progress-label">0/6</span>
+          </div>
+          <div class="mosaic" id="mosaic" aria-hidden="true"></div>
+          <div class="map" id="map"></div>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-quest" aria-labelledby="q-title">
+        <article class="panel">
+          <p class="kicker" id="q-kicker">Nível</p>
+          <h2 id="q-title">Pergunta</h2>
+          <div class="meta-row" id="q-meta"></div>
+          <p id="q-prompt" class="lead"></p>
+          <div id="q-body"></div>
+          <p id="q-hint" class="helper" hidden></p>
+          <div id="q-feedback" hidden class="feedback"></div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" type="button" id="btn-hint">Pedir dica</button>
+            <button class="btn btn-primary" type="button" id="btn-submit">Tentar</button>
+            <button class="btn btn-success" type="button" id="btn-next" hidden>Próxima</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-shop" aria-labelledby="shop-title">
+        <article class="panel">
+          <p class="kicker">Loja do Atelier</p>
+          <h2 id="shop-title">Gaste notas. Nada é obrigatório.</h2>
+          <p>Temas deixam a tela mais calma. Títulos aparecem no seu nome. Dicas ajudam sem entregar a resposta.</p>
+          <div class="shop-grid" id="shop-grid"></div>
+          <p id="shop-feedback" class="feedback" hidden></p>
+          <div class="btn-row"><button class="btn btn-ghost" type="button" data-go="map">Voltar ao mapa</button></div>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-medals" aria-labelledby="med-title">
+        <article class="panel">
+          <p class="kicker">Medalhas</p>
+          <h2 id="med-title">Selos que você conquistou</h2>
+          <div class="medal-grid" id="medal-grid"></div>
+          <div class="btn-row"><button class="btn btn-ghost" type="button" data-go="map">Voltar ao mapa</button></div>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-lore" aria-labelledby="lore-title">
+        <article class="panel">
+          <p class="kicker">Códice</p>
+          <h2 id="lore-title">História do Atelier</h2>
+          <div class="codex" id="lore-list"></div>
+          <div class="btn-row"><button class="btn btn-ghost" type="button" data-go="map">Voltar ao mapa</button></div>
+        </article>
+      </section>
+
+      <section class="screen" id="screen-end" aria-labelledby="end-title">
+        <article class="hero-card">
+          <p class="kicker">Jogo zerado</p>
+          <h2 id="end-title">O mosaico voltou a se juntar.</h2>
+          <p id="end-text"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" type="button" data-go="map">Ver o mapa completo</button>
+            <button class="btn btn-ghost" type="button" id="btn-reset">Novo jogador neste aparelho</button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="tiny">Safe-fail ativo. Um passo por vez. Conteúdo escolar: De que é feita a música + mosaico e vanguarda.</footer>
+  </div>
+
+  <div class="pause-overlay" id="pause" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+    <div class="pause-box">
+      <h2 id="pause-title">Modo foco</h2>
+      <p>Pare. Olhe para um ponto. Respire 3 vezes. Nada se perde. O checkpoint segura seu lugar.</p>
+      <div class="btn-row" style="justify-content:center">
+        <button class="btn btn-primary" type="button" id="btn-resume">Voltei. Continuar.</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/content.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

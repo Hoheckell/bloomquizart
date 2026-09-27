@@ -1,0 +1,36 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate PR title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check branch naming
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          if [[ ! $BRANCH =~ ^(feature|bugfix|hotfix|refactor|docs|chore)/.+ ]]; then
+            echo "Branch name doesn't follow convention: <type>/<description>"
+            exit 1
+          fi
+
+      - name: Lint commits
+        uses: wagoid/commitlint-github-action@v5
+
+      - name: Check for merge commits
+        run: |
+          if git log --merges origin/${{ github.base_ref }}..HEAD | grep -q 'Merge'; then
+            echo "Merge commits detected. Please rebase your branch."
+            exit 1
+          fi
